@@ -42,12 +42,24 @@ class RollDice extends StatefulWidget {
 class _RollDiceState extends State<RollDice> {
   int dice1 = 1;
   int dice2 = 1;
+  String winnerMessage = "Lanza los dados";
 
   void rollDice() {
     setState(() {
       dice1 = random.nextInt(6) + 1;
       dice2 = random.nextInt(6) + 1;
+      winnerMessage = printWinner(dice1, dice2);
     });
+  }
+
+  String printWinner(dice1, dice2) {
+    if (dice1 > dice2) {
+      return "Ha ganado el jugador 1 con el dado $dice1";
+    } else if (dice2 > dice1) {
+      return "Ha ganado el jugador 2 con el dado $dice2";
+    } else {
+      return "El juego ha quedado empate";
+    }
   }
 
   @override
@@ -108,6 +120,16 @@ class _RollDiceState extends State<RollDice> {
                 ),
               ),
             ),
+            SizedBox(height: 20),
+            Text(
+              winnerMessage,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
+            )
           ],
         ),
       ),
