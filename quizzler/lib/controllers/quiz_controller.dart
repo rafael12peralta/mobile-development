@@ -12,13 +12,21 @@ class QuizController {
         question:
             "Linus Sebastian is the creator of the Linux kernel, which went on to be used in Linux, Android, and Chrome OS.",
         answer: false)
+
+
   ];
 
-  String _getCurrentQuestion() {
+  String getCurrentQuestion() {
     return _questionBank[_questionNumber].question;
   }
 
-  // String get getCurrentQuestion {
-  //   return _questionBank[_questionNumber].question;
-  // }
+  bool getCurentAnswer() {
+    return _questionBank[_questionNumber].answer;
+  }
+
+  void nextQuestion() {
+    if (_questionNumber < _questionBank.length - 1) {
+      _questionNumber++;
+    }
+  }
 }

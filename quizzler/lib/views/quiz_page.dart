@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizzler/controllers/quiz_controller.dart';
 
 import 'components/my_button.dart';
 
@@ -12,16 +13,22 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  List<Icon> scores = [
-    Icon(
-      Icons.check,
-      color: Colors.green,
-    ),
-    Icon(
-      Icons.close,
-      color: Colors.red,
-    )
-  ];
+
+  final quizBrain = QuizController();
+  List<Icon> scores = [];
+
+  void checkCurrentAnswer(bool userAnswer){
+    setState(() {
+      final currentAnswer = quizBrain.getCurentAnswer();
+      if(currentAnswer == userAnswer){
+        scores.add(Icon(Icons.check, color: Colors.green), );
+      } else {
+        scores.add(Icon(Icons.close, color: Colors.red,));
+      }
+
+      quizBrain.nextQuestion();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +52,8 @@ class _QuizPageState extends State<QuizPage> {
                 flex: 5,
                 child: Center(
                   child: Text(
-                    'Show Questions Here',
+                    textAlign: TextAlign.center,
+                    quizBrain.getCurrentQuestion(),
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 25,
@@ -54,7 +62,9 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               MyButton(
-                onTap: () {},
+                onTap: () {
+                  checkCurrentAnswer(true);
+                },
                 buttonColor: Colors.green,
                 buttonText: 'True',
               ),
@@ -62,7 +72,9 @@ class _QuizPageState extends State<QuizPage> {
                 height: 20,
               ),
               MyButton(
-                onTap: () {},
+                onTap: () {
+                  checkCurrentAnswer(false);
+                },
                 buttonColor: Colors.red,
                 buttonText: 'False',
               ),
