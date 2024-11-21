@@ -11,9 +11,33 @@ class QuizController {
     Quiz(
         question:
             "Linus Sebastian is the creator of the Linux kernel, which went on to be used in Linux, Android, and Chrome OS.",
+        answer: false),
+    Quiz(
+        question:
+            'Early RAM was directly seated onto the motherboard and could not be easily removed.',
+        answer: true),
+    Quiz(
+        question: 'The first dual-core CPU was the Intel Pentium D.',
+        answer: false),
+    Quiz(
+        question:
+            'The last Windows operating system to be based on the Windows 9x kernel was Windows 98.',
+        answer: false),
+    Quiz(
+        question:
+            'The open source program Redis is a relational database server.',
+        answer: false),
+    Quiz(
+        question: 'Android versions are named in alphabetical order.',
+        answer: true),
+    Quiz(
+        question:
+            'To bypass US Munitions Export Laws, the creator of the PGP published all the source code in book form. ',
+        answer: true),
+    Quiz(
+        question:
+            'All program codes have to be compiled into an executable file in order to be run. This file can then be executed on any machine.',
         answer: false)
-
-
   ];
 
   String getCurrentQuestion() {
