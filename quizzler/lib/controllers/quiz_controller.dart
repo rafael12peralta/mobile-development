@@ -53,4 +53,12 @@ class QuizController {
       _questionNumber++;
     }
   }
+
+  bool isQuizFinished() {
+    return _questionNumber >= _questionBank.length - 1;
+  }
+
+  void resetQuiz(){
+    _questionNumber = 0;
+  }
 }

@@ -13,20 +13,53 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-
   final quizBrain = QuizController();
   List<Icon> scores = [];
 
-  void checkCurrentAnswer(bool userAnswer){
+  void showAlertDialog() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Quiz finished'),
+            content: Text(
+                "You've completed the quiz\nCorrect answers: ${scores.where((icon) => icon.color == Colors.green).length}"),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    setState(() {
+                      quizBrain.resetQuiz();
+                      scores.clear();
+                    });
+                  },
+                  child: Text('Restart')),
+            ],
+          );
+        });
+  }
+
+  void checkCurrentAnswer(bool userAnswer) {
     setState(() {
       final currentAnswer = quizBrain.getCurentAnswer();
-      if(currentAnswer == userAnswer){
-        scores.add(Icon(Icons.check, color: Colors.green), );
+
+      if (currentAnswer == userAnswer) {
+        scores.add(Icon(
+          Icons.check,
+          color: Colors.green,
+        ));
       } else {
-        scores.add(Icon(Icons.close, color: Colors.red,));
+        scores.add(Icon(
+          Icons.close,
+          color: Colors.red,
+        ));
       }
 
-      quizBrain.nextQuestion();
+      if (quizBrain.isQuizFinished()) {
+        showAlertDialog();
+      } else {
+        quizBrain.nextQuestion();
+      }
     });
   }
 
