@@ -6,6 +6,9 @@ class ExploreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card1();
+    return Container(
+      color: Colors.blue,
+    );
+    //Card1();
   }
 }
