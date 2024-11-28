@@ -6,6 +6,9 @@ class TobuyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card3();
+    return Container(
+      color: Colors.green,
+    );
+    //return Card3();
   }
 }
