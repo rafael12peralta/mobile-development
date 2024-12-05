@@ -12,7 +12,7 @@ class Card1 extends StatelessWidget {
   //final String description = 'Learn to make the perfect bread';
   //final String chef = 'Ray Wenderlich';
 
-final ExploreRecipe recipe;
+  final ExploreRecipe recipe;
 
   @override
   Widget build(BuildContext context) {

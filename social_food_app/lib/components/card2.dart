@@ -5,7 +5,6 @@ import 'package:social_food_app/models/explore_data.dart';
 
 import '../models/explore_recipe.dart';
 
-
 class Card2 extends StatelessWidget {
   const Card2({super.key, required this.recipe});
 
@@ -18,8 +17,7 @@ class Card2 extends StatelessWidget {
         constraints: BoxConstraints.expand(width: 350, height: 450),
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(recipe.backgroundImage),
-              fit: BoxFit.cover),
+              image: AssetImage(recipe.backgroundImage), fit: BoxFit.cover),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(

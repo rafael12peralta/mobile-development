@@ -6,7 +6,6 @@ import 'package:social_food_app/home.dart';
 void main() => runApp(FoodSocialApp());
 
 class FoodSocialApp extends StatefulWidget {
-
   @override
   State<FoodSocialApp> createState() => _FoodSocialAppState();
 }
@@ -14,9 +13,9 @@ class FoodSocialApp extends StatefulWidget {
 class _FoodSocialAppState extends State<FoodSocialApp> {
   ThemeData theme = FoodTheme.light();
 
-  void changeThemeMode(bool isLightMode){
+  void changeThemeMode(bool isLightMode) {
     setState(() {
-      if(isLightMode){
+      if (isLightMode) {
         theme = FoodTheme.light();
       } else {
         theme = FoodTheme.dark();
@@ -31,7 +30,8 @@ class _FoodSocialAppState extends State<FoodSocialApp> {
       debugShowCheckedModeBanner: false,
       theme: theme,
       title: appTitle,
-      home: Home(changeThemeMode: changeThemeMode,
+      home: Home(
+        changeThemeMode: changeThemeMode,
         appTitle: appTitle,
       ),
     );
