@@ -92,7 +92,7 @@ class _InputScreenState extends State<InputScreen> {
                   SliderTheme(
                     data: SliderTheme.of(context).copyWith(
                         inactiveTrackColor: Color(0XFF8D8E98),
-                        activeTrackColor: Color(0XFFFFFFF),
+                        activeTrackColor: Color(0XFFFFFFFF),
                         thumbColor: Color(0XFFEB1555),
                         overlayColor: Color(0X29EB1555),
                         thumbShape:
