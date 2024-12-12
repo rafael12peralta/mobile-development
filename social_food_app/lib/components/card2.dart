@@ -25,7 +25,7 @@ class Card2 extends StatelessWidget {
             AuthorCard(
               authorName: recipe.authorName,
               title: recipe.title,
-              imageProvider: AssetImage(recipe.authorImage),
+              imageProvider: AssetImage(recipe.profileImage),
             ),
             Expanded(
               child: Stack(

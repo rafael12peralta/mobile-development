@@ -14,7 +14,7 @@ class ApiService {
   }
 
   //Obtener una lista de sample recipes para mostrar en la aplicacion
-  Future<List<SimpleRecipe>> _getRecipes() async {
+  Future<List<SimpleRecipe>> getRecipes() async {
     //simular una consulta a un api
     await Future.delayed(Duration(milliseconds: 1000));
     //traemos el json desde nuestro archivo

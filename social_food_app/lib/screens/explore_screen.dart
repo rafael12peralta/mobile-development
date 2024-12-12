@@ -19,7 +19,7 @@ class ExploreScreen extends StatelessWidget {
             scrollDirection: Axis.vertical,
             children: [
               TodayRecipeListview(recipes: snapshot.data?.todayRecipes ?? []),
-              FirendPostListView(posts: snapshot.data?.friendPosts ?? []),
+              FriendPostListView(posts: snapshot.data?.friendPosts ?? []),
             ],
           );
         } else {
