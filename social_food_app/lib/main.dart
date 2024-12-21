@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:social_food_app/components/theme_button.dart';
 import 'package:social_food_app/food_theme.dart';
 import 'package:social_food_app/home.dart';
+import 'package:social_food_app/models/grocery_manager.dart';
+import 'package:social_food_app/models/tab_manager.dart';
 
 void main() => runApp(FoodSocialApp());
 
@@ -30,9 +33,15 @@ class _FoodSocialAppState extends State<FoodSocialApp> {
       debugShowCheckedModeBanner: false,
       theme: theme,
       title: appTitle,
-      home: Home(
-        changeThemeMode: changeThemeMode,
-        appTitle: appTitle,
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => TabManager(),),
+          ChangeNotifierProvider(create: (context) => GroceryManager(),),
+        ],
+        child: Home(
+          changeThemeMode: changeThemeMode,
+          appTitle: appTitle,
+        ),
       ),
     );
   }
