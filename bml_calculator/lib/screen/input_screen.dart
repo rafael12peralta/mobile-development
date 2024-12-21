@@ -1,10 +1,14 @@
 import 'package:bml_calculator/constants.dart';
+import 'package:bml_calculator/models/calculator.dart';
+import 'package:bml_calculator/screen/results.dart';
 import 'package:flutter/material.dart';
 
 enum Gender {
   male,
   female,
 }
+
+const String title = 'BMI CALCULATOR';
 
 class InputScreen extends StatefulWidget {
   const InputScreen({super.key});
@@ -23,7 +27,7 @@ class _InputScreenState extends State<InputScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('BMI CALCULATOR'),
+        title: Text(title),
         centerTitle: true,
       ),
       body: Column(
@@ -131,7 +135,7 @@ class _InputScreenState extends State<InputScreen> {
                           height: 10,
                         ),
                         Text(
-                          '18',
+                          '$age',
                           style: TextStyle(fontSize: 25),
                         ),
                         SizedBox(
@@ -142,11 +146,19 @@ class _InputScreenState extends State<InputScreen> {
                           children: [
                             MyRoundedButton(
                               icon: Icons.remove,
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  age--;
+                                });
+                              },
                             ),
                             MyRoundedButton(
                               icon: Icons.add,
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  age++;
+                                });
+                              },
                             ),
                           ],
                         ),
@@ -168,7 +180,7 @@ class _InputScreenState extends State<InputScreen> {
                           height: 10,
                         ),
                         Text(
-                          '111',
+                          '$weight',
                           style: TextStyle(fontSize: 25),
                         ),
                         SizedBox(
@@ -179,11 +191,19 @@ class _InputScreenState extends State<InputScreen> {
                           children: [
                             MyRoundedButton(
                               icon: Icons.remove,
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  weight--;
+                                });
+                              },
                             ),
                             MyRoundedButton(
                               icon: Icons.add,
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  weight++;
+                                });
+                              },
                             ),
                           ],
                         ),
@@ -194,7 +214,20 @@ class _InputScreenState extends State<InputScreen> {
               ],
             ),
           ),
-          MyButton(),
+          MyButton(
+              label: 'CALCULATE',
+              onPressed: () {
+                Calculator calc = Calculator(height: height, weight: weight);
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return Results(
+                        title: title,
+                        bmiResult: calc.calculateBMI(),
+                        results: calc.getResults(),
+                        interpretation: calc.getInterpretation());
+                  },
+                ));
+              })
         ],
       ),
     );
@@ -272,19 +305,22 @@ class MyRoundedButton extends StatelessWidget {
 }
 
 class MyButton extends StatelessWidget {
-  const MyButton({super.key});
+  const MyButton({super.key, required this.onPressed, required this.label});
+
+  final String label;
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: onPressed,
       child: Container(
         width: double.infinity,
         height: 60,
         color: Color(0XFFEB1555),
         margin: EdgeInsets.only(top: 10),
         padding: EdgeInsets.only(bottom: 20),
-        child: Center(child: Text('Calculate')),
+        child: Center(child: Text(label)),
       ),
     );
   }
