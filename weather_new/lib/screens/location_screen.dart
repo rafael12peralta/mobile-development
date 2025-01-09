@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:weather_new/models/weather-data.dart';
 import 'package:weather_new/screens/city_screen.dart';
 import 'package:weather_new/services/weather.dart';
@@ -25,11 +26,11 @@ class _LocationScreenState extends State<LocationScreen> {
 
   Future<void> _getInitialData() async {
     WeatherModel weatherModel = new WeatherModel();
-    WeatherData data = await weatherModel.getWeatherData();
+    WeatherData weatherData = await weatherModel.getWeatherData();
 
     setState(() {
-      temperature = (data.main?.temp ?? 0.0).toInt();
-      currentCity = data.name ?? '';
+      temperature = (weatherData.main?.temp ?? 0.0).toInt();
+      currentCity = weatherData.name ?? '';
     });
   }
 
@@ -83,7 +84,7 @@ class _LocationScreenState extends State<LocationScreen> {
 
                         int temp = result.main?.temp?.toInt() ?? 0;
                         updateUI(temp, cityName);
-                      } 
+                      }
                     },
                     child: Icon(
                       Icons.location_city,
