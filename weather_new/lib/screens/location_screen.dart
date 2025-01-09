@@ -13,7 +13,8 @@ class _LocationScreenState extends State<LocationScreen> {
   int temperature = 0;
   String currentCity = '';
   String weatherIcon = '☀️';
-  String weatherMessage = "It's 🍦 time";
+  String weatherMessage = '';
+  //"It's 🍦 time";
 
   void updateUI(int temp, String newCity, int condition) {
     setState(() {
@@ -22,6 +23,27 @@ class _LocationScreenState extends State<LocationScreen> {
       weatherIcon = WeatherModel().getWeatherIcon(condition);
       weatherMessage = WeatherModel().getMessage(temp);
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchWeatherData();
+  }
+
+  void fetchWeatherData() async {
+    final weather = WeatherModel();
+    var weatherData = await weather.getWeatherData();
+
+    if (weatherData != null && weatherData['main'] != null) {
+      int temp = (weatherData['main']['temp'] ?? 0).toInt();
+      int condition = (weatherData['weather'][0]['id'] ?? 0).toInt();
+      String cityName = weatherData['name'] ?? '';
+      updateUI(temp, cityName, condition);
+    } else {
+      print("Error: No se pudieron obtener los datos del clima.");
+    }
   }
 
   @override
@@ -46,7 +68,9 @@ class _LocationScreenState extends State<LocationScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      fetchWeatherData();
+                    },
                     child: Icon(
                       Icons.near_me,
                       size: 50.0,
@@ -65,10 +89,12 @@ class _LocationScreenState extends State<LocationScreen> {
                         var weatherData =
                             await weather.getWeatherDataByCity(cityName);
 
-                        if (weatherData != null && weatherData['main']!= null) {
-                         int temp = (weatherData['main']['temp'] ?? 0).toInt();
-                         int condition = (weatherData['weather'][0]['id'] ?? 0).toInt();
-                         updateUI(temp, cityName, condition);
+                        if (weatherData != null &&
+                            weatherData['main'] != null) {
+                          int temp = (weatherData['main']['temp'] ?? 0).toInt();
+                          int condition =
+                              (weatherData['weather'][0]['id'] ?? 0).toInt();
+                          updateUI(temp, cityName, condition);
                         } else {
                           print("Error: Datos inválidos");
                         }
@@ -86,7 +112,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                     temperature.toString() + '°', 
+                      temperature.toString() + '°',
                       style: kTempTextStyle,
                     ),
                     Text(
