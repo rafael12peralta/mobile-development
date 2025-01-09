@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:weather_new/screens/city_screen.dart';
+import 'package:weather_new/services/weather.dart';
 
 import '../utilities/constants.dart';
 
@@ -30,14 +32,31 @@ class _LocationScreenState extends State<LocationScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      final weather = WeatherModel();
+                      var result = await weather.getWeatherData();
+                      updateUI(result);
+                    },
                     child: Icon(
                       Icons.near_me,
                       size: 50.0,
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      var cityName =
+                          await Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return CityScreen();
+                        },
+                      ));
+                      if (cityName != null) {
+                        final weather = WeatherModel();
+                        var result =
+                            await weather.getWeatherDataByCity(cityName);
+                        updateUI(result);
+                      } // TODO: si yo retorno vacia la ciudad, retornar un error
+                    },
                     child: Icon(
                       Icons.location_city,
                       size: 50.0,

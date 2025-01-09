@@ -17,25 +17,26 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   void getLocationData() async {
-  final location = Location();
-  await location.getCurrentPosition();
-  print(location.latitude);
-  print(location.longitude);
+    final location = Location();
+    await location.getCurrentPosition();
+    print(location.latitude);
+    print(location.longitude);
 
-  Navigator.push(context, MaterialPageRoute(builder: (context) {
-    return LocationScreen();
-  },));
-}
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return LocationScreen();
+      },
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: SpinKitFadingFour(
-          color: Colors.white,
-          size: 50.0,
-        )
-      ),
+          child: SpinKitFadingFour(
+        color: Colors.white,
+        size: 50.0,
+      )),
     );
   }
 }
