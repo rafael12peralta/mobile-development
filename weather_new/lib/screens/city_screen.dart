@@ -46,7 +46,11 @@ class _CityScreenState extends State<CityScreen> {
                   decoration: InputDecoration(
                       fillColor: Colors.white,
                       filled: true,
+                      icon: Icon(Icons.location_city, color: Colors.white),
                       hintText: 'Enter City Name',
+                      hintStyle: TextStyle(
+                        color: Colors.grey.shade700,
+                      ),
                       border: OutlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(10))),
