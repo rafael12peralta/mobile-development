@@ -52,10 +52,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final Color primaryColor = Colors.lightBlue;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Crypto Converter'),
         centerTitle: true,
+        backgroundColor: primaryColor,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,70 +67,116 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: EdgeInsets.fromLTRB(18, 18, 18, 0),
             child: Card(
-              color: Colors.lightBlueAccent,
+              color: primaryColor,
               elevation: 5,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(15),
               ),
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 28, vertical: 15),
+                    const EdgeInsets.symmetric(horizontal: 28, vertical: 20),
                 child: Text(
                   '1 $selectedCrypto = $exchangeRate $selectedCurrency',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
               ),
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Crypto: '),
-              Platform.isIOS
-                  ? getIOSPicker(criptoList, (index) {
-                      setState(() {
-                        selectedCrypto = criptoList[index];
-                        getExchangeRate();
-                      });
-                    })
-                  : getAndroidDropdown(criptoList, selectedCrypto, (value) {
-                      setState(() {
-                        selectedCrypto = value!;
-                        getExchangeRate();
-                      });
-                    }),
-              SizedBox(
-                width: 20,
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Card(
+                    color: primaryColor,
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    child: ListTile(
+                      title: Text(
+                        'Select Crypto',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      trailing: Platform.isIOS
+                          ? getIOSPicker(cryptoList, (index) {
+                              setState(() {
+                                selectedCrypto = cryptoList[index];
+                                getExchangeRate();
+                              });
+                            })
+                          : getAndroidDropdown(cryptoList, selectedCrypto,
+                              (value) {
+                              setState(() {
+                                selectedCrypto = value!;
+                                getExchangeRate();
+                              });
+                            }),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Card(
+                    color: primaryColor,
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    child: ListTile(
+                      title: Text(
+                        'Select Currency',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      trailing: Platform.isIOS
+                          ? getIOSPicker(currencyList, (index) {
+                              setState(() {
+                                selectedCurrency = currencyList[index];
+                                getExchangeRate();
+                              });
+                            })
+                          : getAndroidDropdown(currencyList, selectedCurrency,
+                              (value) {
+                              setState(() {
+                                selectedCurrency = value!;
+                                getExchangeRate();
+                              });
+                            }),
+                    ),
+                  ),
+                ],
               ),
-              Text('Currency: '),
-              Platform.isIOS
-                  ? getIOSPicker(currencyList, (index) {
-                      setState(() {
-                        selectedCurrency = currencyList[index];
-                        getExchangeRate();
-                      });
-                    })
-                  : getAndroidDropdown(currencyList, selectedCurrency, (value) {
-                      setState(() {
-                        selectedCurrency = value!;
-                        getExchangeRate();
-                      });
-                    }),
-            ],
+            ),
           ),
           Container(
-            height: 150,
+            height: 80,
             alignment: Alignment.center,
-            padding: EdgeInsets.only(bottom: 30),
-            color: Colors.lightBlue,
+            padding: EdgeInsets.only(bottom: 15),
+            color: Colors.white,
             child: ElevatedButton(
-                onPressed: getExchangeRate,
-                child: Text('Actualizar Tasa de Cambio')),
-          )
+              onPressed: getExchangeRate,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: primaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                elevation: 5,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.refresh, color: Colors.white),
+                  SizedBox(width: 10),
+                  Text(
+                    'Update Exchange Rate',
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );

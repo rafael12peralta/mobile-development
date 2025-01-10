@@ -23,7 +23,7 @@ const List<String> currencyList = [
   "ZAR",
 ];
 
-const List<String> criptoList = [
+const List<String> cryptoList = [
   "BTC",
   "ETH",
   "LTC",
