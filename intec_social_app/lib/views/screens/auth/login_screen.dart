@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intec_social_app/views/screens/auth/forgot_password.dart';
+import 'package:intec_social_app/views/screens/auth/register_screen.dart';
+import 'package:intec_social_app/views/screens/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -23,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       // Redirige a la pantalla Home si ya está autenticado
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(),));
     }
   }
 
@@ -42,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
           SnackBar(content: Text('Inicio de sesión exitoso')),
         );
         // Navegar a la pantalla principal después del inicio de sesión
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(),));
       } on FirebaseAuthException catch (e) {
         String message;
         if (e.code == 'user-not-found') {
@@ -73,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'assets/images/instagram_logo.png', // Asegúrate de agregar este archivo a tu proyecto
+                  'assets/instagram_logo.png', // Asegúrate de agregar este archivo a tu proyecto
                   height: 80,
                 ),
                 SizedBox(height: 30),
@@ -145,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, '/forgot_password');
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordScreen(),));
                   },
                   child: Text(
                     '¿Olvidaste tu contraseña?',
@@ -166,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, '/register');
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterScreen(),));
                   },
                   child: Text(
                     '¿No tienes una cuenta? Regístrate',

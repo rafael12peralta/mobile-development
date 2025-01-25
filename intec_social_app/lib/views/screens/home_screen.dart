@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intec_social_app/views/screens/chat_screen.dart';
 import 'nav_screens/feed_screen.dart';
 import 'nav_screens/post_screen.dart';
 import 'nav_screens/profile_screen.dart';
 import 'nav_screens/search_screen.dart';
+import 'create_stories_screen.dart';
+import 'chat_list_screen.dart'; // Importar la pantalla de lista de chats
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -31,7 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _getUserData() async {
     try {
-      DocumentSnapshot userDoc = await _firestore.collection('users').doc(_user!.uid).get();
+      DocumentSnapshot userDoc =
+          await _firestore.collection('users').doc(_user!.uid).get();
       if (userDoc.exists) {
         setState(() {
           _userData = userDoc.data() as Map<String, dynamic>;
@@ -61,28 +65,43 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: _userData != null
             ? Row(
-          children: [
-            CircleAvatar(
-              backgroundImage: NetworkImage(_userData?['photoUrl'] ?? 'https://via.placeholder.com/150'),
-              radius: 18,
-            ),
-            SizedBox(width: 10),
-            Text(_userData?['username'] ?? 'Cargando...')
-          ],
-        )
+                children: [
+                  CircleAvatar(
+                    backgroundImage: _userData?['photoUrl'] != null &&
+                            _userData?['photoUrl'].isNotEmpty
+                        ? NetworkImage(_userData?['photoUrl'])
+                        : const AssetImage('assets/placeholder.png')
+                            as ImageProvider,
+                    radius: 18,
+                  ),
+                  SizedBox(width: 10),
+                  Text(_userData?['username'] ?? 'Cargando...')
+                ],
+              )
             : const CircularProgressIndicator(),
         backgroundColor: Colors.blueAccent,
         actions: [
           IconButton(
             icon: const Icon(Icons.add_box_outlined),
             onPressed: () {
-              // Lógica para agregar una nueva publicación
+              // Navegar a la pantalla de crear historia
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const CreateStoryScreen()),
+              );
             },
           ),
           IconButton(
             icon: const Icon(Icons.message),
             onPressed: () {
-              // Lógica para ir a los mensajes directos
+              // Navegar a la pantalla de lista de chats
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ChatListScreen(), // Navegar a la lista de chats
+                ),
+              );
             },
           ),
         ],
@@ -91,6 +110,9 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
+        backgroundColor: Colors.blueGrey,
+        selectedItemColor: Colors.green,
+        unselectedItemColor: Colors.grey,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

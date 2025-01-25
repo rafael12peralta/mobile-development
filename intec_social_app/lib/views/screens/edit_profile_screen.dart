@@ -36,7 +36,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Future<void> _getUserData() async {
     if (_user != null) {
       try {
-        DocumentSnapshot userDoc = await _firestore.collection('users').doc(_user!.uid).get();
+        DocumentSnapshot userDoc =
+            await _firestore.collection('users').doc(_user!.uid).get();
         if (userDoc.exists) {
           setState(() {
             var data = userDoc.data() as Map<String, dynamic>;
@@ -55,7 +56,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   Future<void> _pickImage() async {
     final ImagePicker _picker = ImagePicker();
-    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? pickedFile =
+        await _picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       setState(() {
@@ -67,7 +69,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Future<void> _uploadImage() async {
     if (_imageFile != null) {
       try {
-        final storageRef = _storage.ref().child("profile_pics/${_user!.uid}.jpg");
+        final storageRef =
+            _storage.ref().child("profile_pics/${_user!.uid}.jpg");
         await storageRef.putFile(_imageFile!);
         String downloadUrl = await storageRef.getDownloadURL();
         setState(() {
@@ -86,12 +89,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         'lastName': _lastNameController.text,
         'bio': _bioController.text,
         'phone': _phoneController.text,
-        'photoUrl': _imageUrl ?? _imageUrl, // Si la imagen no se cambia, mantiene la anterior
+        'photoUrl': _imageUrl, // Se pasa directamente el valor de _imageUrl
       });
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Información actualizada')));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Información actualizada')));
     } catch (e) {
       print("Error al actualizar los datos: $e");
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error al actualizar los datos')));
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al actualizar los datos')));
     }
   }
 
@@ -114,7 +119,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   radius: 50,
                   backgroundImage: _imageFile != null
                       ? FileImage(_imageFile!)
-                      : (_imageUrl != null ? NetworkImage(_imageUrl!) : AssetImage('assets/placeholder.png')) as ImageProvider,
+                      : (_imageUrl != null
+                              ? NetworkImage(_imageUrl!)
+                              : AssetImage('assets/placeholder.png'))
+                          as ImageProvider,
                 ),
               ),
             ),

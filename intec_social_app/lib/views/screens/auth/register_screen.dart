@@ -16,6 +16,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   bool _isLoading = false;
 
+  // Método de registro
   void _register() async {
     if (_emailController.text.isEmpty ||
         _passwordController.text.isEmpty ||
@@ -32,13 +33,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _isLoading = true;
     });
 
-    await _authController.registerUser(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-      username: _usernameController.text.trim(),
-      lastName: _lastNameController.text.trim(),
-      phone: _phoneController.text.trim(),
-    );
+    try {
+      // Llamamos al método de registro del AuthController
+      await _authController.registerUser(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+        username: _usernameController.text.trim(),
+        lastName: _lastNameController.text.trim(),
+        phone: _phoneController.text.trim(),
+      );
+
+      // Si todo va bien, puedes redirigir al usuario o mostrar un mensaje de éxito
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Usuario registrado exitosamente')),
+      );
+    } catch (e) {
+      // Mostrar un error si algo falla
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error al registrar: ${e.toString()}')),
+      );
+    }
 
     setState(() {
       _isLoading = false;
@@ -144,12 +158,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: _isLoading
                       ? const CircularProgressIndicator(color: Colors.white)
                       : const Text(
-                    'Registrarse',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                          'Registrarse',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                 ),
               ],
             ),
